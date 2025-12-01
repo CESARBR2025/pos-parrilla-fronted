@@ -5,6 +5,7 @@ Click -> cambiar estado (libre-ocupada)
 Recibe actualizaciones por ws
 */
 
+import { useMemo, useState } from 'react';
 import type { Table } from '../../../shared/types/table';
 import { updateTableStatus } from '../api/tables.api';
 import { TableGrid } from '../components/TableGrid';
@@ -12,6 +13,13 @@ import { useTables } from '../hooks/useTables';
 
 export function WaiterHomePage() {
   const { tables, reload } = useTables();
+
+  const [filter, setFilter] = useState<'all' | 'libre' | 'ocupada'>('all');
+
+  const filtered = useMemo(() => {
+    if (filter === 'all') return tables;
+    return tables.filter((t) => t.status === filter);
+  }, [tables, filter]);
 
   async function handleSelect(table: Table) {
     const next = table.status === 'libre' ? 'ocupada' : 'libre';
@@ -96,7 +104,11 @@ export function WaiterHomePage() {
           </span>
 
           <section className=" w-lg  grid grid-cols-3 mt-4 gap-4  ">
-            <div className="flex border-2 border-gray-300   bg-white rounded-xl gap-2 p-1 items-center px-4">
+            <div
+              onClick={() => setFilter('all')}
+              className="flex border-2 border-gray-300   bg-white rounded-xl gap-2 p-1 items-center px-4
+              transition-transform hover:scale-110 cursor-pointer "
+            >
               <div className="flex justify-center items-center  h-7 w-7 ml-2 bg-gray-200 rounded-full">
                 <svg width={20} height={20} className="stroke-gray-400">
                   <use href="#circle"></use>
@@ -110,7 +122,11 @@ export function WaiterHomePage() {
               </div>
             </div>
 
-            <div className="flex border-2 border-gray-300   bg-white rounded-xl gap-2 p-1 items-center">
+            <div
+              onClick={() => setFilter('libre')}
+              className="flex border-2 border-gray-300   bg-white rounded-xl gap-2 p-1 items-center
+              transition-transform hover:scale-110 cursor-pointer"
+            >
               <div className="flex justify-center items-center  h-7 w-7 ml-2 bg-gray-100 rounded-full">
                 <svg width={20} height={20} className="stroke-green-400">
                   <use href="#circle-check"></use>
@@ -124,7 +140,11 @@ export function WaiterHomePage() {
               </div>
             </div>
 
-            <div className="flex border-2 border-gray-300   bg-white rounded-xl gap-2 p-1 items-center">
+            <div
+              onClick={() => setFilter('ocupada')}
+              className="flex border-2 border-gray-300   bg-white rounded-xl gap-2 p-1 items-center
+              transition-transform scale-110 cursor-pointer"
+            >
               <div className="flex justify-center items-center  h-7 w-7 ml-2 bg-gray-100 rounded-full">
                 <svg width={20} height={20} className="stroke-red-400">
                   <use href="#circle-x"></use>
@@ -141,7 +161,7 @@ export function WaiterHomePage() {
         </div>
 
         <section className="mt-4">
-          <TableGrid tables={tables} onSelect={handleSelect} />
+          <TableGrid tables={filtered} onSelect={handleSelect} />
         </section>
       </section>
     </section>
