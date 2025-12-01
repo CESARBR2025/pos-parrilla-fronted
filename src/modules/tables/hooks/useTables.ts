@@ -27,6 +27,6 @@ export function useTables() {
     });
   }, []); // El [] es "ejecutar una vez al montar el componente"
 
-  //React vuelve a renderizar el compoenente con la nueva data
+  // Cualquier componente que use useTables pueda acceder a tables y a la funcion de forma segura
   return { tables, reload };
 }

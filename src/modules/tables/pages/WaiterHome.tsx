@@ -20,9 +20,130 @@ export function WaiterHomePage() {
   }
 
   return (
-    <div className="p-4">
-      <h1 className="text-xl mb-4">Mesas</h1>
-      <TableGrid tables={tables} onSelect={handleSelect} />
-    </div>
+    <section className="p-4 bg-orange-100/50 min-h-screen  ">
+      <section className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3  gap-4 mt-14 ">
+        <div
+          className="flex  g-4 bg-white rounded-2xl p-6 shadow-md items-center
+        w-full
+        transition-transform hover:scale-105
+        "
+        >
+          <div
+            className="bg-green-200/40 rounded-xl mr-4 flex justify-center items-center p-3
+        shadow-md  h-12 
+          "
+          >
+            <svg width={28} height={28}>
+              <use href="#arrow-green"> </use>
+            </svg>
+          </div>
+          <div className="flex flex-col g-4">
+            <span className="text-sm text-pink-900 font-semibold">
+              Ocupacion
+            </span>
+            <span className="text-3xl font-bold ">42%</span>
+          </div>
+        </div>
+
+        <div
+          className="flex  g-4 bg-white rounded-2xl p-4 shadow-md items-center
+          transition-transform hover:scale-105 "
+        >
+          <div
+            className="bg-orange-200/40 rounded-xl mr-4 flex justify-center items-center h-12
+        shadow-md p-3
+        
+          "
+          >
+            <svg width={28} height={28} className="stroke-orange-400">
+              <use href="#cup-coffee"> </use>
+            </svg>
+          </div>
+
+          <div className="flex flex-col g-4">
+            <span className="text-sm text-pink-900 font-semibold">
+              Mesas activas
+            </span>
+            <span className="text-3xl font-bold ">5</span>
+          </div>
+        </div>
+
+        <div className="flex  g-4 bg-white rounded-2xl p-4 shadow-md items-center   transition-transform hover:scale-105 ">
+          <div
+            className="bg-orange-200/40 rounded-xl mr-4 flex justify-center items-center h-12
+        shadow-md p-3
+          "
+          >
+            <svg width={28} height={28} className="stroke-orange-400">
+              <use href="#money-icon"></use>
+            </svg>
+          </div>
+
+          <div className="flex flex-col g-4">
+            <span className="text-sm text-pink-900 font-semibold">
+              Ventas Hoy
+            </span>
+            <span className="text-3xl font-bold ">$2,450</span>
+          </div>
+        </div>
+      </section>
+
+      <section className="pt-8">
+        <div>
+          <h1 className="text-4xl mb-4 font-bold pl-8">Gestión de Mesas</h1>
+          <span className="font-base text-gray-900/60">
+            Disponibilidad actual del restaurante
+          </span>
+
+          <section className=" w-lg  grid grid-cols-3 mt-4 gap-4  ">
+            <div className="flex border-2 border-gray-300   bg-white rounded-xl gap-2 p-1 items-center px-4">
+              <div className="flex justify-center items-center  h-7 w-7 ml-2 bg-gray-200 rounded-full">
+                <svg width={20} height={20} className="stroke-gray-400">
+                  <use href="#circle"></use>
+                </svg>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-base font-semibold">Todas</span>
+                <div className="bg-gray-100 h-6 w-6 rounded-full text-center text-sm">
+                  <span>12</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex border-2 border-gray-300   bg-white rounded-xl gap-2 p-1 items-center">
+              <div className="flex justify-center items-center  h-7 w-7 ml-2 bg-gray-100 rounded-full">
+                <svg width={20} height={20} className="stroke-green-400">
+                  <use href="#circle-check"></use>
+                </svg>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-base font-semibold">Disponibles</span>
+                <div className="bg-gray-100 h-6 w-6 rounded-full text-center text-sm">
+                  <span>12</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex border-2 border-gray-300   bg-white rounded-xl gap-2 p-1 items-center">
+              <div className="flex justify-center items-center  h-7 w-7 ml-2 bg-gray-100 rounded-full">
+                <svg width={20} height={20} className="stroke-red-400">
+                  <use href="#circle-x"></use>
+                </svg>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-base font-semibold">Ocupadas</span>
+                <div className="bg-gray-100 h-6 w-6 rounded-full text-center text-sm">
+                  <span>12</span>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <section className="mt-4">
+          <TableGrid tables={tables} onSelect={handleSelect} />
+        </section>
+      </section>
+    </section>
   );
 }
