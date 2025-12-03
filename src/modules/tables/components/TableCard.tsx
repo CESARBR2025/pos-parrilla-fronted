@@ -65,7 +65,7 @@ export function TableCard({ table, onClick }: TableCardProps) {
             shadow-md
           "
           >
-            <span className="text-gray-600 text-3xl font-bold  ">2</span>
+            <span className="text-gray-600 text-3xl font-bold  ">{table.id}</span>
           </div>
           <div className="flex flex-col ">
             <span className="font-bold text-black text-xl">{table.name}</span>
