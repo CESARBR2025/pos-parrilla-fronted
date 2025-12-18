@@ -1,11 +1,11 @@
 /* UI DE MESERO */
 
-import type { Table } from '../../../shared/types/table';
+import type { TableType } from '../../../shared/types/table';
 type TableStatus = 'libre' | 'ocupada';
 
 interface TableCardProps {
-  table: Table;
-  onClick: (table: Table) => void;
+  table: TableType;
+  onClick: (table: TableType) => void;
 }
 
 export function TableCard({ table, onClick }: TableCardProps) {
@@ -65,7 +65,9 @@ export function TableCard({ table, onClick }: TableCardProps) {
             shadow-md
           "
           >
-            <span className="text-gray-600 text-3xl font-bold  ">2</span>
+            <span className="text-gray-600 text-3xl font-bold  ">
+              {table.id}
+            </span>
           </div>
           <div className="flex flex-col ">
             <span className="font-bold text-black text-xl">{table.name}</span>

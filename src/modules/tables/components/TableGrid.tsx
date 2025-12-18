@@ -1,9 +1,9 @@
-import type { Table } from '../../../shared/types/table';
+import type { TableType } from '../../../shared/types/table';
 import { TableCard } from './TableCard';
 
 interface TableGridProps {
-  tables: Table[];
-  onSelect: (table: Table) => void;
+  tables: TableType[];
+  onSelect: (table: TableType) => void;
 }
 
 export function TableGrid({ tables, onSelect }: TableGridProps) {

@@ -7,12 +7,12 @@ Funcion de:
 
 import { useEffect, useState } from 'react';
 import { fetchTables } from '../api/tables.api'; //obtener las tablas
-import type { Table } from '../../../shared/types/table'; // tipado de la bd
+import type { TableType } from '../../../shared/types/table'; // tipado de la bd
 
 //Componente llama a useTables
 export function useTables() {
   //Inicializa tables como []
-  const [tables, setTables] = useState<Table[]>([]);
+  const [tables, setTables] = useState<TableType[]>([]);
 
   //Funcion a renderiza paso 2
   async function reload() {

@@ -3,7 +3,7 @@ Tipar datos exactamente iguales como en la tabla de SUPABASE
 */
 type TableStatus = 'libre' | 'ocupada';
 
-export interface Table {
+export interface TableType {
   id: number;
   name: string;
   capacity: number;

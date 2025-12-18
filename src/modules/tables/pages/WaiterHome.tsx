@@ -6,7 +6,7 @@ Recibe actualizaciones por ws
 */
 
 import { useMemo, useState } from 'react';
-import type { Table } from '../../../shared/types/table';
+import type { TableType } from '../../../shared/types/table';
 import { updateTableStatus } from '../api/tables.api';
 import { TableGrid } from '../components/TableGrid';
 import { useTables } from '../hooks/useTables';
@@ -21,7 +21,7 @@ export function WaiterHomePage() {
     return tables.filter((t) => t.status === filter);
   }, [tables, filter]);
 
-  async function handleSelect(table: Table) {
+  async function handleSelect(table: TableType) {
     const next = table.status === 'libre' ? 'ocupada' : 'libre';
     await updateTableStatus(table.id, next); //actualizar el status
     reload(); // traer los datos con la actualizacion hecha
