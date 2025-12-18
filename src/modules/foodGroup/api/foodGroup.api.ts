@@ -2,7 +2,7 @@
 Hacer peticiones a la BD para obtener los grupos
 */
 
-const BASE_URL = "'http://127.0.0.1:8000/foodGroup'";
+const BASE_URL = 'http://127.0.0.1:8000/foodGroup';
 
 export async function fetchGroup() {
   const res = await fetch(`${BASE_URL}/`);
