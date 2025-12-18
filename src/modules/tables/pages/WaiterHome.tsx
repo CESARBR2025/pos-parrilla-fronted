@@ -6,21 +6,44 @@ Recibe actualizaciones por ws
 */
 
 import { useMemo, useState } from 'react';
-import type { TableType } from '../../../shared/types/table';
 import { updateTableStatus } from '../api/tables.api';
 import { TableGrid } from '../components/TableGrid';
 import { useTables } from '../hooks/useTables';
+import type { TableType } from '../../../shared/types/table';
 
 export function WaiterHomePage() {
   const { tables, reload } = useTables();
 
   const [filter, setFilter] = useState<'all' | 'libre' | 'ocupada'>('all');
 
+  // Filtrar tablas dependiendo si es (libre|ocupada|all)
   const filtered = useMemo(() => {
     if (filter === 'all') return tables;
     return tables.filter((t) => t.status === filter);
   }, [tables, filter]);
 
+  //Contar las mesas libres
+  const { libresCount, ocupadasCount, totalCount, porcentOccupational } =
+    useMemo(() => {
+      let libres = 0;
+      let ocupadas = 0;
+
+      for (const t of tables) {
+        if (t.status === 'libre') libres++;
+        if (t.status === 'ocupada') ocupadas++;
+      }
+
+      const total = libres + ocupadas;
+      const porcent = (ocupadas * 100) / total;
+      return {
+        libresCount: libres,
+        ocupadasCount: ocupadas,
+        totalCount: total,
+        porcentOccupational: porcent,
+      };
+    }, [tables]);
+
+  //Capturar que mesa se esta seleccionando y cambiar estatus
   async function handleSelect(table: TableType) {
     const next = table.status === 'libre' ? 'ocupada' : 'libre';
     await updateTableStatus(table.id, next); //actualizar el status
@@ -49,7 +72,7 @@ export function WaiterHomePage() {
             <span className="text-sm text-pink-900 font-semibold">
               Ocupacion
             </span>
-            <span className="text-3xl font-bold ">42%</span>
+            <span className="text-3xl font-bold ">{porcentOccupational}%</span>
           </div>
         </div>
 
@@ -72,7 +95,7 @@ export function WaiterHomePage() {
             <span className="text-sm text-pink-900 font-semibold">
               Mesas activas
             </span>
-            <span className="text-3xl font-bold ">5</span>
+            <span className="text-3xl font-bold ">{ocupadasCount}</span>
           </div>
         </div>
 
@@ -117,7 +140,7 @@ export function WaiterHomePage() {
               <div className="flex flex-col">
                 <span className="text-base font-semibold">Todas</span>
                 <div className="bg-gray-100 h-6 w-6 rounded-full text-center text-sm">
-                  <span>12</span>
+                  <span>{totalCount}</span>
                 </div>
               </div>
             </div>
@@ -135,7 +158,7 @@ export function WaiterHomePage() {
               <div className="flex flex-col">
                 <span className="text-base font-semibold">Disponibles</span>
                 <div className="bg-gray-100 h-6 w-6 rounded-full text-center text-sm">
-                  <span>12</span>
+                  <span>{libresCount}</span>
                 </div>
               </div>
             </div>
@@ -153,7 +176,7 @@ export function WaiterHomePage() {
               <div className="flex flex-col">
                 <span className="text-base font-semibold">Ocupadas</span>
                 <div className="bg-gray-100 h-6 w-6 rounded-full text-center text-sm">
-                  <span>12</span>
+                  <span>{ocupadasCount}</span>
                 </div>
               </div>
             </div>
