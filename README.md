@@ -1,73 +1,150 @@
-# React + TypeScript + Vite
+# POS Parrilla 🍖🔥
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Sistema **POS web para restaurantes pequeños (parrilla)**, enfocado en **rapidez, simplicidad y operación en tiempo real**.
+Este proyecto está pensado como un **MVP funcional**, sin sobreingeniería, ideal para negocios pequeños.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🎯 Objetivo del proyecto
 
-## React Compiler
+Construir un sistema POS moderno que permita:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Gestionar mesas y su estado
+- Crear y administrar órdenes en tiempo real
+- Visualizar órdenes en cocina (KDS)
+- Generar cuentas y registrar pagos
 
-## Expanding the ESLint configuration
+Todo con una **arquitectura clara**, **flujo en tiempo real** y **UX operativa**.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🧱 Arquitectura general
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+Frontend (React + TS)
+        ↓ REST / WebSockets
+Backend (FastAPI)
+        ↓
+PostgreSQL
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🛠️ Stack tecnológico
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Backend
+
+- **FastAPI** – API REST + WebSockets
+- **PostgreSQL** – Base de datos principal
+- **SQLAlchemy / async** (según módulo)
+- **Pydantic** – Validación de datos
+
+### Frontend
+
+- **React**
+- **TypeScript**
+- **Vite**
+- **Fetch API** (sin sobrecarga innecesaria)
+
+---
+
+## 📦 Módulos del sistema (MVP)
+
+### 🪑 Gestión de Mesas
+
+- Alta de mesas
+- Estados: `libre`, `ocupada`
+- Asociación con órdenes activas
+
+### 🧾 Órdenes
+
+- Crear órdenes por mesa o para llevar
+- Agregar productos y notas
+- Estados de orden (pendiente, en preparación, lista)
+
+### 🍳 KDS (Kitchen Display System)
+
+- Visualización en tiempo real de órdenes
+- Sin edición, solo lectura
+
+### 💵 Cuenta y Cobro
+
+- Cálculo automático del total
+- Registro de pagos (efectivo / tarjeta)
+- Cierre de cuenta
+
+---
+
+## 🌿 Flujo de ramas (Git)
+
+Se usa un flujo **simple y controlado**:
+
+- `main` → rama estable / producción
+- `qa` → integración y pruebas
+
+### Flujo recomendado
+
+1. Desarrollar en `qa`
+2. Probar funcionalidad
+3. Merge `qa` → `main`
+4. Merge `main` → `qa`
+
+---
+
+## 🚀 Instalación y ejecución
+
+### Backend
+
+```bash
+cd pos-backend
+python -m venv venv
+source venv/bin/activate  # Windows: venv\\Scripts\\activate
+pip install -r requirements.txt
+uvicorn app.main:app --reload
 ```
+
+### Frontend
+
+```bash
+cd pos-frontend
+npm install
+npm run dev
+```
+
+Variables de entorno (`.env`):
+
+```env
+VITE_API_URL=http://127.0.0.1:8000
+```
+
+---
+
+## 🧠 Principios del proyecto
+
+- MVP primero
+- Código claro > código complejo
+- Tiempo real solo donde aporta valor
+- UX pensada para operación real
+- Git limpio y entendible
+
+---
+
+## 📌 Estado del proyecto
+
+🚧 **En desarrollo activo**
+Actualmente implementando:
+
+- Conexión frontend ↔ backend
+- Gestión de grupos y mesas
+- Flujo base de órdenes
+
+---
+
+## ✍️ Autor
+
+**Cesar**
+Ingeniero en Sistemas Computacionales
+
+---
+
+> Proyecto construido con enfoque práctico y mentalidad de producto re
