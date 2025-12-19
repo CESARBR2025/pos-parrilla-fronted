@@ -1,1 +1,8 @@
 @import "tailwindcss";
+
+@layer base {
+    body{
+        @apply bg-black/95
+    }
+}
+

@@ -1,17 +1,17 @@
 import { useFoodGroupList } from '../hooks/useFoodGroups';
 import type { FoodGroupType } from '../../../shared/types/foodGroupType';
+import { FoodGroupGrid } from '../components/FoodGroupGrid';
+
+
+
 export function Menu() {
   const { groups } = useFoodGroupList();
-  console.log('groups:', groups);
+  
 
   return (
     <div>
-      <h1>Grupos cargados</h1>
-      <ul>
-        {groups?.map((group: FoodGroupType) => (
-          <li key={group.id}>{group.name}</li>
-        ))}
-      </ul>
+      <FoodGroupGrid groups={groups} />
+      
     </div>
   );
 }
