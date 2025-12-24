@@ -1,20 +1,20 @@
-import { FoodGroupCard } from "./FoodGroupCard"
-import type { FoodGroupType } from "../../../shared/types/foodGroupType"
+import { FoodGroupCard } from './FoodGroupCard';
+import type { FoodGroupType } from '../../../shared/types/foodGroupType';
 
 interface FoodGroupProps {
-    groups: FoodGroupType[];
+  groups: FoodGroupType[];
 }
 
-export function FoodGroupGrid ({groups} : FoodGroupProps ) {
-    return (
-<div className="grid grid-cols-6 gap-4
-mt-4
-">
-{
-    groups.map((group) => (
-        <FoodGroupCard  key={group.id} group={group}/>
-    ))
-}
-</div>        
-    )
+export function FoodGroupGrid({ groups }: FoodGroupProps) {
+  return (
+    <div
+      className="grid grid-cols-6 gap-4
+p-4 
+"
+    >
+      {groups.map((group) => (
+        <FoodGroupCard key={group.id} group={group} />
+      ))}
+    </div>
+  );
 }
