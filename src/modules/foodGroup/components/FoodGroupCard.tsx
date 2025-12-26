@@ -1,11 +1,13 @@
 import type { FoodGroupType } from '../../../shared/types/foodGroupType';
 interface FoodGroupCardProps {
   group: FoodGroupType;
+  onSelect: (group_id: string) => void
 }
 
-export function FoodGroupCard({ group }: FoodGroupCardProps) {
+export function FoodGroupCard({ group, onSelect }: FoodGroupCardProps) {
   return (
     <div
+    onClick={() => onSelect(group.id)}
       className="
       group
         rounded-lg
