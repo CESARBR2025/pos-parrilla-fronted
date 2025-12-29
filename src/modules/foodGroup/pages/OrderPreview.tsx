@@ -8,20 +8,34 @@ interface OrderPreviewProps {
 
 export function OrderPreview ( {items, onAdd, onRemove}: OrderPreviewProps) {
 
+    
     const total = items.reduce(
+      
         (acc, item) => acc + item.price * item.quantity, 0
     )
 
+    const tip = total  * 0.10
+
+    const totalAll = total + tip
+    
+
+    console.log(total)
     return (
          <div className="w-full bg-white border rounded p-4">
       
-      <h2 className="font-semibold text-lg mb-3">Comanda</h2>
+      <div className="flex justify-between">
+<h2 className="font-semibold text-lg mb-3">Producto</h2>
+      <h2 className="font-semibold text-lg mb-3">Cantidad</h2>
 
+      </div>
+      
       {items.length === 0 && (
         <p className="text-gray-400 text-sm">
           No hay productos agregados
         </p>
       )}
+
+      
 
       <div className="space-y-2">
         {items.map(item => (
@@ -31,7 +45,7 @@ export function OrderPreview ( {items, onAdd, onRemove}: OrderPreviewProps) {
           >
             <div>
               <p className="text-sm font-medium">
-                {item.quantity}x {item.name}
+              {item.name}
               </p>
               <p className="text-xs text-gray-500">
                 ${item.price} c/u
@@ -49,7 +63,7 @@ export function OrderPreview ( {items, onAdd, onRemove}: OrderPreviewProps) {
               )}
 
               <span className="font-semibold">
-                ${(item.price * item.quantity).toFixed(2)}
+                x {( item.quantity)} pz
               </span>
 
               {onAdd && (
@@ -68,9 +82,22 @@ export function OrderPreview ( {items, onAdd, onRemove}: OrderPreviewProps) {
       <hr className="my-4" />
 
       <div className="flex justify-between font-semibold text-lg">
-        <span>Total</span>
+        <span>Subtotal</span>
         <span>${total.toFixed(2)}</span>
+        
       </div>
+    <div className="flex justify-between font-semibold text-lg">
+        <span>Servicio</span>
+        <span>10%</span>
+        
+      </div>
+    
+    <div className="flex justify-between font-semibold text-lg">
+        <span>Total</span>
+        <span>${totalAll.toFixed(2)}</span>
+        
+      </div>
+    
     </div>
     )
 

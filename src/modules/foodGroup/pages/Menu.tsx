@@ -60,6 +60,11 @@ export function Menu() {
     })
   }
 
+  const addProductById = (productId: string) => {
+  const product = products.find(p => p.id === productId);
+  if (product) addProduct(product);
+};
+
   //Funcion para eliminar elemento
   const removeProduct = (productId: string) => {
     setComandaItems(prev =>
@@ -78,37 +83,41 @@ export function Menu() {
  
 
   return (
-    <section className="flex flex-col">
-      <header className="w-full p-4">
-        <h1 className="font-bold text-gray-700 text-xl">Explorar Categorias</h1>
-      </header>
-      <div className="flex-1">
-        <FoodGroupGrid groups={groups} onSelect={setSelectGroupId} />
+    <section className='flex w-full h-screen gap-4 p-4'>
+      <div className='flex-7 bg-gray-300 p-4 rounded shadow'>
+      <div className="flex flex-col">
+            <header className="w-full p-4">
+              <h1 className="font-bold text-gray-700 text-xl">Explorar Categorias</h1>
+            </header>
+            <div className="flex-1">
+              <FoodGroupGrid groups={groups} onSelect={setSelectGroupId} />
+            </div>
+
+            <section className="flex flex-col">
+              <header className="p-4">
+                <h1 className="text-xl font-bold text-gray-700">Alimentos</h1>
+              </header>
+            <div>
+          {loading && <p>Cargando productos...</p>}
+
+          {!loading && products.length === 0 && (
+            <p>No hay productos para esta categoría</p>
+          )}
+
+          {!loading && products.length > 0 && (
+            <FoodProductGrid products={products} orderItems={comandaItems} onAdd={addProduct} onRemove={removeProduct} />
+          )}
+        </div>
+      </section>
+    </div>
+
       </div>
 
-      <section className="flex flex-col">
-        <header className="p-4">
-          <h1 className="text-xl font-bold text-gray-700">Alimentos</h1>
-        </header>
-       <div>
-    {loading && <p>Cargando productos...</p>}
-
-    {!loading && products.length === 0 && (
-      <p>No hay productos para esta categoría</p>
-    )}
-
-    {!loading && products.length > 0 && (
-      <FoodProductGrid products={products} orderItems={comandaItems} onAdd={addProduct} onRemove={removeProduct} />
-    )}
-  </div>
-      </section>
-
-
-    <section>
-
+      <div className='flex-3 bg-red-400 p-4 rounded shadow'>
+        <OrderPreview items={comandaItems}  onAdd={addProductById} onRemove={removeProduct}/>
+      </div>
     </section>
-    <OrderPreview items={comandaItems} />
-    </section>
+ 
 
     
   );
