@@ -3,13 +3,25 @@ import { FoodGroupGrid } from '../components/FoodGroupGrid';
 import { FoodProductGrid } from '../../foodProduct/components/FoodProductGrid';
 import { useFoodProductList } from '../../foodProduct/hooks/useFoodProduct';
 import { useEffect, useState } from 'react';
+import type { FoodProductType } from '../../../shared/types/foodProductType';
+import { OrderPreview } from './OrderPreview';
+//Modelo de la comanda
+export interface OrderItem {
+  productId: string
+  name: string;
+  price: number;
+  quantity: number;
+}
 
 
 export function Menu() {
   const { groups } = useFoodGroupList();
   const [selectGroupId, setSelectGroupId] = useState<string | null>(null)
   const {products, load, loading} = useFoodProductList(selectGroupId);
-  
+
+  //Array de comanda
+  const [comandaItems, setComandaItems] = useState<OrderItem[]>([])
+
   useEffect(() => {
     if(groups.length > 0 && !selectGroupId) {
       setSelectGroupId(groups[0].id)
@@ -24,6 +36,42 @@ export function Menu() {
     }
   }, [selectGroupId])
 
+  //Funcion para agregar producto
+  const addProduct = (product: FoodProductType) => {
+    setComandaItems(prev => {
+      const existing = prev.find(p => p.productId === product.id)
+
+      if (existing) {
+        return prev.map(p => 
+          p.productId === product.id
+          ? { ...p, quantity: p.quantity + 1}
+          : p
+        )
+      }
+      return [
+        ...prev,
+        {
+          productId: product.id,
+          name: product.name,
+          price: product.price,
+          quantity: 1
+        }
+      ]
+    })
+  }
+
+  //Funcion para eliminar elemento
+  const removeProduct = (productId: string) => {
+    setComandaItems(prev =>
+      prev
+        .map(p =>
+          p.productId === productId
+            ? { ...p, quantity: p.quantity - 1 }
+            : p
+        )
+        .filter(p => p.quantity > 0)
+    )
+}
   
 
 
@@ -50,10 +98,18 @@ export function Menu() {
     )}
 
     {!loading && products.length > 0 && (
-      <FoodProductGrid products={products} />
+      <FoodProductGrid products={products} orderItems={comandaItems} onAdd={addProduct} onRemove={removeProduct} />
     )}
   </div>
       </section>
+
+
+    <section>
+
     </section>
+    <OrderPreview items={comandaItems} />
+    </section>
+
+    
   );
 }
