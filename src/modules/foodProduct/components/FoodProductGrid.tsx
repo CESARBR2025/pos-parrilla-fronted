@@ -21,7 +21,7 @@ export function FoodProductGrid( {products, orderItems, onAdd, onRemove} : FoodP
   }
 
     return (
-       <div className="grid grid-cols-6 gap-4">
+       <div className="grid grid-cols-4 gap-4">
       {products.map(producto => {
         const quantity = getQuantity(producto.id)
 

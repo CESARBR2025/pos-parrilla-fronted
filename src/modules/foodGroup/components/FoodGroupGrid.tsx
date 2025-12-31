@@ -9,7 +9,7 @@ interface FoodGroupProps {
 export function FoodGroupGrid({ groups, onSelect}: FoodGroupProps) {
   return (
     <div
-      className="grid grid-cols-6 gap-4
+      className="grid grid-cols-4 gap-4
 p-4 
 "
     >

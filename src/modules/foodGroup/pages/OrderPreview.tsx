@@ -1,4 +1,6 @@
 import type { OrderItem } from "./Menu";
+import { sendToKitchen } from "../../../services/kitchen";
+
 
 interface OrderPreviewProps {
     items: OrderItem[]
@@ -8,6 +10,23 @@ interface OrderPreviewProps {
 
 export function OrderPreview ( {items, onAdd, onRemove}: OrderPreviewProps) {
 
+  const handleSendOrder = async () => {
+    try{
+      for (const item of items) {
+        await sendToKitchen({
+          table_id: 1,
+          product_id: item.productId,
+          product_name: item.name,
+          quantity: item.quantity,
+          notes: item.notes
+        })
+      }
+      alert ("Orden enviada a cocina desde Orden Preview")
+    } catch (err) {
+      console.error(err)
+      alert("Error al enviar orden")
+    }
+  }
     
     const total = items.reduce(
       
@@ -16,10 +35,9 @@ export function OrderPreview ( {items, onAdd, onRemove}: OrderPreviewProps) {
 
     const tip = total  * 0.10
 
-    const totalAll = total + tip
-    
+ 
 
-    console.log(total)
+   
     return (
          <div className="w-full bg-white border rounded p-4">
       
@@ -81,23 +99,11 @@ export function OrderPreview ( {items, onAdd, onRemove}: OrderPreviewProps) {
 
       <hr className="my-4" />
 
-      <div className="flex justify-between font-semibold text-lg">
-        <span>Subtotal</span>
-        <span>${total.toFixed(2)}</span>
-        
+      <div onClick={handleSendOrder} 
+       className="rounded-xl bg-orange-400/70  flex justify-center p-2 ">
+      <span className="font-semibold text-xl cursor-pointer ">Cocinar</span>
       </div>
-    <div className="flex justify-between font-semibold text-lg">
-        <span>Servicio</span>
-        <span>10%</span>
-        
-      </div>
-    
-    <div className="flex justify-between font-semibold text-lg">
-        <span>Total</span>
-        <span>${totalAll.toFixed(2)}</span>
-        
-      </div>
-    
+      
     </div>
     )
 
